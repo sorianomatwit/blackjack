@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.InputMismatchException;
-
 public class Game {
 	/**
 	 * @author Manyeuris Soriano
