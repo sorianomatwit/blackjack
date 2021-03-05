@@ -58,8 +58,8 @@ public class Player extends GenericPlayer {
 	public int isBetting(Scanner s) {
 		System.out.printf("How much would %s like to bet?%nMinimum: 10%n(Chips: %d): ", name, chips);
 		String placeholder = s.next();
-		if(Game.isOnlyNumbers(placeholder)) {
-			this.wager = Game.digitCharToInt(placeholder);
+		if(Functions.isOnlyNumbers(placeholder)) {
+			this.wager = Functions.digitCharToInt(placeholder);
 		} else {
 			System.out.printf("Must be a number!%n");
 			return -1;

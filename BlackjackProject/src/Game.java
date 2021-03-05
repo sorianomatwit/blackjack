@@ -9,86 +9,22 @@ public class Game {
 	 *         blackjack Players bet certain amount of chps on whther they can get
 	 *         the highest value of cards under 21
 	 */
-
-	public static boolean yesOrNo(String question, Scanner s) {
-		String answer = " ";
-		boolean wow = true;
-		do {
-			System.out.printf(question);
-			answer = s.next();
-			answer = answer.toLowerCase();
-			if (answer.contentEquals("y") || answer.contentEquals("n")) {
-				wow = false;
-			} else {
-				System.out.printf("Please answer y/n%n");
-				wow = true;
-			}
-		} while (wow);
-		if (answer.contentEquals("y"))
-			return true;
-		return false;
-	}
 	
-	public static boolean isOnlyNumbers(String s) {
-		for(char c: s.toCharArray()) {
-			if(Character.getNumericValue(c) > 9 || Character.getNumericValue(c) < 0) {
-				if(Character.getNumericValue(s.charAt(0)) == -1) {
-					continue;
-				}
-				return false;
-			}
-		}
-		return true; 
-	}
-	public static int digitCharToInt(String s) {
-		int d = 0;
-		char[] c = s.toCharArray();
-		for(int i = c.length - 1;i >= 0;i--) {
-			if(Character.getNumericValue(c[i]) == -1) {
-				d *= -1;
-			} else {
-				d += (int) (Character.getNumericValue(c[i]) * Math.pow(10, (c.length-1) - i));
-			}
-		}
-		return d;
-	}
-
+	public final static int MAX_PLAYERS = 6;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner input = new Scanner(System.in);
 		Deck bicycle = new Deck();
 		boolean restart;
-		String placeholder = " ";
 		do {
 			System.out.printf("%nWelcome to BlackJack!%n%n");
-			int numPlayers = 0;
-			do {
-				System.out.printf("Enter how many players (max 6): ");
-				placeholder = input.next();
-				if(isOnlyNumbers(placeholder)) {
-					numPlayers = digitCharToInt(placeholder);
-				} else {
-					System.out.printf("Must be a number!%n");
-				}
-				if (numPlayers > 6)
-					System.out.printf("Too many players!%n");
-				if (numPlayers < 0)
-					System.out.printf("Not enough players!%n");
-			} while (numPlayers > 6 || numPlayers < 0  || !(isOnlyNumbers(placeholder)));
+			int numPlayers = Functions.chooseNum("Enter how many players",MAX_PLAYERS,input);
 			int aiCount = 0;
-			if (yesOrNo("Do you want yo play with AI (y/n):  ", input)) {
-				do {
-					System.out.printf("How many AI player do you want (max %d): ", (6 - numPlayers));
-					placeholder = input.next();
-					if(isOnlyNumbers(placeholder)) {
-						aiCount = digitCharToInt(placeholder);
-					} else {
-						System.out.printf("Must be a number!%n");
-					}
-					if (aiCount > (6 - numPlayers) || aiCount < 0) {
-						System.out.printf("Maximum is %d!%n", (6 - numPlayers));
-					}
-				} while (aiCount > (6 - numPlayers) || aiCount < 0 || !(isOnlyNumbers(placeholder)));
+			if(numPlayers != 6) {
+				if (Functions.yesOrNo("Do you want yo play with AI (y/n):  ", input)) {
+					aiCount = Functions.chooseNum("How many AI player do you want",(MAX_PLAYERS - numPlayers),input);
+				}
 			}
 			ArrayList<GenericPlayer> players = new ArrayList<GenericPlayer>(numPlayers + 1);
 			// add all the players
@@ -114,8 +50,6 @@ public class Game {
 							}
 						} while (true);
 					}
-				}
-				for (GenericPlayer p : players) {
 					// deals fist cards
 					bicycle.draw(p);
 					bicycle.draw(p);
@@ -230,7 +164,7 @@ public class Game {
 						}
 					}
 				}
-				repeat = yesOrNo("Do you want to play again (y/n)?", input);
+				repeat = Functions.yesOrNo("Do you want to play again (y/n)?", input);
 				// Checked if the player used a valid answer on whether they would like to play
 				// or not
 				if (repeat) {
@@ -244,7 +178,7 @@ public class Game {
 			if (players.size() == 1) {
 				System.out.printf("There are no players left!%n");
 			}
-			restart = yesOrNo("Do you want to play new game (y/n)?", input);
+			restart = Functions.yesOrNo("Do you want to play new game (y/n)?", input);
 			if (restart) {
 				for (GenericPlayer p : players)
 					p.reset();

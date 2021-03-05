@@ -32,7 +32,9 @@ public class Hand extends CardCollection implements Comparable<Hand> {
 				if (checkAce() && (value + 10 < 21)) {
 					value += 10;
 				}
-				
+				if(checkAce() && (value > 21)) {
+					value -= 10;
+				}
 			}
 		}
 		return value;
