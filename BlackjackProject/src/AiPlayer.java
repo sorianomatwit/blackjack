@@ -42,8 +42,8 @@ public class AiPlayer extends Player {
 	}
 	int count = 1;
 	private void changeName() {
-		name = names[4];
-		//name = names[rand.nextInt(names.length)];
+		//name = names[4];
+		name = names[rand.nextInt(names.length)];
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class AiPlayer extends Player {
 	 * @return whether the specific player should hit
 	 */
 	public boolean isHitting(ArrayList<GenericPlayer> p) {
-		if (name.contentEquals(names[0])) {
+		if (name.contentEquals(names[0])) {//Charles
 			// basic player
 			if (chips > 33) {
 				wager = (int) (chips * (.30));
@@ -62,7 +62,7 @@ public class AiPlayer extends Player {
 				return true;
 			} else
 				return false;
-		} else if (name.contentEquals(names[1])) {
+		} else if (name.contentEquals(names[1])) {//Xavier
 			// copycat player
 			if (p.size() > 2) {
 				for (int i = 0; i < p.size(); i++) {
@@ -86,7 +86,7 @@ public class AiPlayer extends Player {
 			} else {
 				changeName();
 			}
-		} else if (name.contentEquals(names[2])) {
+		} else if (name.contentEquals(names[2])) {//Raul
 			// im feeling lucky
 			if (bustCount >= 2 && chips > 10) {
 				wager = (int) (chips * .80);
@@ -100,7 +100,7 @@ public class AiPlayer extends Player {
 			} else
 				return false;
 
-		} else if (name.contentEquals(names[3])) {
+		} else if (name.contentEquals(names[3])) {//Reymond
 			// card count strat
 			for (GenericPlayer m : p) {
 				if (m.cards.get(0).isFlipped()) {
@@ -137,7 +137,7 @@ public class AiPlayer extends Player {
 				}
 			}
 			return false;
-		} else if (name.contentEquals(names[4])) { 
+		} else if (name.contentEquals(names[4])) { //Stephanie
 			int count = 0;
 			for (GenericPlayer m : p) {
 				count+= this.compareTo(m);

@@ -22,6 +22,7 @@ public class Hand extends CardCollection implements Comparable<Hand> {
 	/**
 	 * @return value of the cards in hand
 	 */
+	boolean addedAce = false;
 	public int getValue() {
 		int value = 0;
 		for (int i = 0; i < cards.size(); i++) {
@@ -31,9 +32,11 @@ public class Hand extends CardCollection implements Comparable<Hand> {
 				value = value + cards.get(i).getValue();
 				if (checkAce() && (value + 10 < 21)) {
 					value += 10;
+					addedAce = true;
 				}
-				if(checkAce() && (value > 21)) {
+				if(checkAce() && (value > 21) && addedAce) {
 					value -= 10;
+					addedAce = false;
 				}
 			}
 		}
